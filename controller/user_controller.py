@@ -1,5 +1,8 @@
 from app import app
+from model.User import User
+
+user = User()
 
 @app.route('/user/signup')
 def signup():
-    return '<h1>User Signup Page</h1>'
+    return user.user_signup()
