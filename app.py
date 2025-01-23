@@ -2,7 +2,8 @@ from flask import Flask
 
 app = Flask(__name__)
 
-from user_controller import signup
+from controller.user_controller import signup
+from controller.product_controller import product_add
 
 @app.route('/')
 def home():
