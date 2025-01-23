@@ -1,4 +1,4 @@
-# __all__ = ["user_controller", "product_controller"]
+# __all__ = ["user_controller"]
 
 import os
 import glob

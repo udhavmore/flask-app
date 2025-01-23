@@ -3,6 +3,6 @@ from model.User import User
 
 user = User()
 
-@app.route('/user/signup')
+@app.route('/user/getall')
 def signup():
     return user.user_signup()
