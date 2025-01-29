@@ -1,5 +1,6 @@
 import mysql.connector
 import json
+from flask import make_response
 
 class User:
     def __init__(self):
@@ -17,16 +18,18 @@ class User:
         self.cur.execute("SELECT * FROM user")
         result = self.cur.fetchall()
         if len(result) > 0:
-            return {"data": result}
+            res = make_response({"data": result}, 200)
+            res.headers['Access-Control-Allow-Origin'] = '*'  # handling CORS for browsers
+            return res
         else:
-            return {"message": "No Data Found!!!"}
+            return make_response({"message": "No Data Found!!!"}, 204)
     
     def user_add_one(self, data):
         """Add a users into the database"""
         query = f"INSERT INTO user(name, email, phone, role, password) VALUES('{data['name']}', '{data['email']}', '{data['phone']}', '{data['role']}', '{data['password']}')"
         print(query)
         self.cur.execute(query)
-        return {"message":"User Created Successfully!!!"}
+        return make_response({"message":"User Created Successfully!!!"}, 201)
     
     def user_update_one(self, data):
         """Update entry for user in database"""
@@ -34,9 +37,9 @@ class User:
         print(query)
         self.cur.execute(query)
         if self.cur.rowcount>0:
-            return {"message": "User updated Successfully!!!"}
+            return make_response({"message": "User updated Successfully!!!"}, 201)
         else:
-            return {"message": "Nothing to Update!!!"}
+            return make_response({"message": "Nothing to Update!!!"}, 202)
     
     def user_delete_one(self, id):
         """Delete user entry from database"""
@@ -44,6 +47,6 @@ class User:
         print(query)
         self.cur.execute(query)
         if self.cur.rowcount>0:
-            return {"message": "User deleted Successfully!!!"}
+            return make_response({"message": "User deleted Successfully!!!"},200)
         else:
-            return {"message": "Nothing to Delete!!!"}
+            return make_response({"message": "Nothing to Delete!!!"}, 202)
