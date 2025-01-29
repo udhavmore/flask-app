@@ -17,16 +17,16 @@ class User:
         self.cur.execute("SELECT * FROM user")
         result = self.cur.fetchall()
         if len(result) > 0:
-            return json.dumps(result)
+            return {"data": result}
         else:
-            return "No Data Found!!!"
+            return {"message": "No Data Found!!!"}
     
     def user_add_one(self, data):
         """Add a users into the database"""
         query = f"INSERT INTO user(name, email, phone, role, password) VALUES('{data['name']}', '{data['email']}', '{data['phone']}', '{data['role']}', '{data['password']}')"
         print(query)
         self.cur.execute(query)
-        return "User Created Successfully!!!"
+        return {"message":"User Created Successfully!!!"}
     
     def user_update_one(self, data):
         """Update entry for user in database"""
@@ -34,9 +34,9 @@ class User:
         print(query)
         self.cur.execute(query)
         if self.cur.rowcount>0:
-            return "User updated Successfully!!!"
+            return {"message": "User updated Successfully!!!"}
         else:
-            return "Nothing to Update!!!"
+            return {"message": "Nothing to Update!!!"}
     
     def user_delete_one(self, id):
         """Delete user entry from database"""
@@ -44,6 +44,6 @@ class User:
         print(query)
         self.cur.execute(query)
         if self.cur.rowcount>0:
-            return "User deleted Successfully!!!"
+            return {"message": "User deleted Successfully!!!"}
         else:
-            return "Nothing to Delete!!!"
+            return {"message": "Nothing to Delete!!!"}
