@@ -29,7 +29,7 @@ class User:
         return "User Created Successfully!!!"
     
     def user_update_one(self, data):
-        """Update  entry for user in database"""
+        """Update entry for user in database"""
         query = f"UPDATE user SET name='{data['name']}', email='{data['email']}', phone='{data['phone']}', role='{data['role']}', password='{data['password']}' WHERE id={data['id']}"
         print(query)
         self.cur.execute(query)
@@ -37,3 +37,13 @@ class User:
             return "User updated Successfully!!!"
         else:
             return "Nothing to Update!!!"
+    
+    def user_delete_one(self, id):
+        """Delete user entry from database"""
+        query = f"DELETE FROM user WHERE id={id}"
+        print(query)
+        self.cur.execute(query)
+        if self.cur.rowcount>0:
+            return "User deleted Successfully!!!"
+        else:
+            return "Nothing to Delete!!!"

@@ -15,3 +15,7 @@ def addoneuser():
 @app.route('/user/updateone', methods=['PUT'])
 def updateuser():
     return user.user_update_one(request.form)
+
+@app.route('/user/deleteone/<id>', methods=['DELETE'])
+def deleteuser(id):
+    return user.user_delete_one(id)
