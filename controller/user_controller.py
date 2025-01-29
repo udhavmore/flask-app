@@ -23,3 +23,7 @@ def deleteuser(id):
 @app.route('/user/patch/<id>', methods=['PATCH'])
 def patchuser(id):
     return user.user_patch(request.form, id)
+
+@app.route('/user/getall/limit/<limit>/page/<page>')
+def userpagination(limit, page):
+    return user.user_pagination(limit, page)

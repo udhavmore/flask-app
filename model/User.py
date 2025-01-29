@@ -18,7 +18,7 @@ class User:
         self.cur.execute("SELECT * FROM user")
         result = self.cur.fetchall()
         if len(result) > 0:
-            res = make_response({"data": result}, 200)
+            res = make_response({"items": result}, 200)
             res.headers['Access-Control-Allow-Origin'] = '*'  # handling CORS for browsers
             return res
         else:
@@ -63,3 +63,17 @@ class User:
             return make_response({"message": "User updated Successfully!!!"}, 201)
         else:
             return make_response({"message": "Nothing to Update!!!"}, 202)
+    
+    def user_pagination(self, limit, page):
+        """Get user records page-by-page"""
+        limit, page = int(limit), int(page)
+        start = (page*limit) - limit
+        query = f"SELECT * FROM user LIMIT {start}, {limit}"
+        self.cur.execute(query)
+        result = self.cur.fetchall()
+        if len(result) > 0:
+            res = make_response({"items": result, "page": page, "limit": limit}, 200)
+            res.headers['Access-Control-Allow-Origin'] = '*'  # handling CORS for browsers
+            return res
+        else:
+            return make_response({"message": "No Data Found!!!"}, 204)
