@@ -11,3 +11,7 @@ def getallusers():
 @app.route('/user/addone', methods=['POST'])
 def addoneuser():
     return user.user_add_one(request.form)
+
+@app.route('/user/updateone', methods=['PUT'])
+def updateuser():
+    return user.user_update_one(request.form)
