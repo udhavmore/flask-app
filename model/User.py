@@ -1,6 +1,6 @@
 import mysql.connector
 import json
-from flask import make_response
+from flask import make_response, send_file
 
 class User:
     def __init__(self):
@@ -77,3 +77,17 @@ class User:
             return res
         else:
             return make_response({"message": "No Data Found!!!"}, 204)
+    
+    def user_upload_avatar(self, id, file_path):
+        """Upload avatar for user and store the URL for avatar into the database"""
+        query = f"UPDATE user SET avatar='{file_path}' WHERE id={id}"
+        print(query)
+        self.cur.execute(query)
+        if self.cur.rowcount>0:
+            return make_response({"message": "File uploaded successfully!!!"}, 201)
+        else:
+            return make_response({"message": "Nothing to Update!!!"}, 202)
+    
+    def user_avatar(self, filename):
+        """Show user avatar"""
+        return send_file(f"uploads/{filename}")
