@@ -43,3 +43,8 @@ def uploaduseravatar(id):
 @app.route('/uploads/<filename>')
 def getuseravatar(filename):
     return user.user_avatar(filename)
+
+
+@app.route('/user/login', methods=['POST'])
+def loginuser():
+    return user.user_login(request.form)

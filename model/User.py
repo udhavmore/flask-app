@@ -1,6 +1,7 @@
 import mysql.connector
 import json
 from flask import make_response, send_file
+from datetime import datetime, timedelta
 
 class User:
     def __init__(self):
@@ -91,3 +92,13 @@ class User:
     def user_avatar(self, filename):
         """Show user avatar"""
         return send_file(f"uploads/{filename}")
+    
+    def user_login(self, data):
+        query = f"SELECT id, name, email, phone, avatar, role_id FROM user WHERE email='{data['email']}' and password='{data['password']}'"
+        print(query)
+        self.cur.execute(query)
+        result = self.cur.fetchall()
+        userdata = result[0]
+        exp_time = datetime.now() + timedelta(minutes=15)
+        exp_epoch_time = int(exp_time.timestamp())
+        return str(exp_epoch_time)
